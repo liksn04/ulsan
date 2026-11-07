@@ -26,6 +26,7 @@
 - [공간 복원 방법과 한계](docs/04-georeferencing-method.md)
 - [우선순위·단계별 실행계획](docs/05-roadmap.md)
 - [현장답사·원자료 확보 체크리스트](docs/06-fieldwork-checklist.md)
+- **[다음 조사 세션 인수인계 문서](docs/08-handoff.md)**
 - [자료 스키마·기여 원칙](data/README.md)
 - [지명 데이터](data/toponyms.csv) / [현대 위치 기준점](data/control_points.csv)
 - [문헌 및 연구 출처 목록](data/sources.csv)
