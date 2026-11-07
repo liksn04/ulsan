@@ -1,0 +1,5 @@
+"control_id","label","kind","address_or_description","latitude","longitude","source_url","verification","historical_scope_warning"
+"CP-001","백천마을 버스정류장","modern_bus_stop","울산 울주군 범서읍 굴화리 22-12","35.55965219","129.2514968","https://gsg.purpleo.kr/article/203075","pending_official_recheck","옛 백천동 중심/경계 아님"
+"CP-002","장검 인근 하나로마트","modern_facility","울산 울주군 범서읍 장검길 10","35.55751","129.25395","https://life.rainygenius.com/울주군울산원예농협하나로마트/","pending_official_recheck","옛 장검동 중심/경계 아님"
+"CP-003","굴화마을 버스정류장","modern_bus_stop","울산 울주군 범서읍 굴화리 681-13","35.55772701","129.2577057","https://gsg.purpleo.kr/article/203340","pending_official_recheck","옛 굴화동 중심/경계 아님"
+"CP-004","물탕골 지번 참조점","modern_parcel_address_proxy","굴화리 589-5 / 백천2길 22-65 잠정 대응","35.55399007811","129.24342445022","https://jusoga.com/b/3171025924102100000004128/울산광역시-울주군-범서읍-백천2길-22-65","pending_official_recheck","구 골짜기 중심/영역이나 역촌 위치 아님"
