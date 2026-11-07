@@ -19,6 +19,7 @@
 
 ## 시작하기
 
+- **[전체 조사 통합 보고서](docs/07-comprehensive-report.md)**
 - [연구 전체 맥락과 현재 결론](docs/01-research-context.md)
 - [연구사·사료·근거 수준](docs/02-sources-and-evidence.md)
 - [지명·전사 대조 및 정정사항](docs/03-toponymy-and-errata.md)
