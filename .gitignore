@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+!.env.example
+outputs/
+*.swp
+.DS_Store
+# Keep raw third-party scans/maps out of git until rights are verified.
+raw/
