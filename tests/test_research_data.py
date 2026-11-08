@@ -86,9 +86,21 @@ class ResearchDataTest(unittest.TestCase):
             rows = {row["claim_id"]: row for row in csv.DictReader(file)}
         self.assertEqual("hypothesis", rows["CL-009"]["evidence_status"])
         self.assertEqual("hypothesis", rows["CL-010"]["evidence_status"])
-        for claim_id in ("CL-013", "CL-015", "CL-018", "CL-020", "CL-021"):
+        for claim_id in ("CL-013", "CL-015", "CL-020", "CL-021"):
             self.assertEqual("pending", rows[claim_id]["evidence_status"])
         self.assertEqual("disputed", rows["CL-022"]["evidence_status"])
+
+    def test_1911_holding_record_correction(self):
+        with (ROOT / "data" / "claims.csv").open(encoding="utf-8", newline="") as file:
+            claims = {row["claim_id"]: row for row in csv.DictReader(file)}
+        with (ROOT / "data" / "sources.csv").open(encoding="utf-8", newline="") as file:
+            sources = {row["source_id"]: row for row in csv.DictReader(file)}
+        # The dossier call number 古2150-1-32 did not match the NLK catalogue.
+        self.assertEqual("rejected", claims["CL-018"]["evidence_status"])
+        self.assertIn("古貴2703-1", claims["CL-023"]["claim"])
+        # Catalogue checked, but the Ulsan pages themselves are still unread.
+        self.assertEqual("catalog_verified", sources["SRC-008"]["access_status"])
+        self.assertIn("미열람", sources["SRC-008"]["note"])
 
 
 if __name__ == "__main__":

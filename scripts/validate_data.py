@@ -15,7 +15,7 @@ EVIDENCE = {"source_verified", "secondary_quote", "hypothesis", "pending", "disp
 LOCATION = {"none", "relative", "parcel_clue"}
 ACCESS = {
     "pdf_pages_checked", "online_checked", "abstract_checked",
-    "citation_identified", "not_obtained", "needs_official_recheck",
+    "catalog_verified", "citation_identified", "not_obtained", "needs_official_recheck",
 }
 # Coordinates in parcels_research.csv are modern lookups; none is verified yet.
 PARCEL_COORD_STATUS = {"private_geocoder_unverified", "official_lookup_pending_review"}
