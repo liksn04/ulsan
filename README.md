@@ -20,7 +20,7 @@
 ## 시작하기
 
 - **[전체 조사 통합 보고서](docs/07-comprehensive-report.md)**
-- **[후속 연구 데이터 통합 조사철](docs/09-collected-data-dossier.md)**
+- [후속 연구 데이터 통합 조사철](docs/09-collected-data-dossier.md) — 원자료 미대조 조사 메모
 - [연구 전체 맥락과 현재 결론](docs/01-research-context.md)
 - [연구사·사료·근거 수준](docs/02-sources-and-evidence.md)
 - [지명·전사 대조 및 정정사항](docs/03-toponymy-and-errata.md)
@@ -29,7 +29,7 @@
 - [현장답사·원자료 확보 체크리스트](docs/06-fieldwork-checklist.md)
 - **[다음 조사 세션 인수인계 문서](docs/08-handoff.md)**
 - [자료 스키마·기여 원칙](data/README.md)
-- [지명 데이터](data/toponyms.csv) / [현대 위치 기준점](data/control_points.csv) / [핵심 지번 검증 데이터](data/parcels_research.csv)
+- [지명 데이터](data/toponyms.csv) / [현대 위치 기준점](data/control_points.csv) / [옛 지번 단서의 현대 주소 조회(미검증)](data/parcels_research.csv)
 - [문헌 및 연구 출처 목록](data/sources.csv)
 - [주장·검증 작업 목록](data/claims.csv)
 
