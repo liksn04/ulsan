@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 import csv
+import shutil
 import sys
+import tempfile
 import unittest
 from collections import Counter
 from pathlib import Path
@@ -47,6 +49,47 @@ class ResearchDataTest(unittest.TestCase):
         for feature in collection["features"]:
             lon, lat = feature["geometry"]["coordinates"]
             self.assertGreater(lon, lat)  # East longitude vs North latitude in Korea.
+
+    def _validate_with_parcel_edit(self, column, value):
+        with tempfile.TemporaryDirectory() as tmp:
+            data_dir = Path(tmp)
+            for path in (ROOT / "data").glob("*.csv"):
+                shutil.copy(path, data_dir / path.name)
+            target = data_dir / "parcels_research.csv"
+            with target.open(encoding="utf-8", newline="") as file:
+                reader = csv.DictReader(file)
+                fieldnames = reader.fieldnames
+                rows = list(reader)
+            rows[0][column] = value
+            with target.open("w", encoding="utf-8", newline="") as file:
+                writer = csv.DictWriter(file, fieldnames=fieldnames, quoting=csv.QUOTE_ALL)
+                writer.writeheader()
+                writer.writerows(rows)
+            return validate(data_dir)
+
+    def test_parcel_village_must_be_attested(self):
+        errors = self._validate_with_parcel_edit("historic_village", "栢川洞/굴화리")
+        self.assertTrue(any("historic_village not attested" in error for error in errors))
+
+    def test_parcel_coordinates_cannot_be_marked_verified(self):
+        errors = self._validate_with_parcel_edit("coordinate_status", "verified")
+        self.assertTrue(any("coordinate_status changed" in error for error in errors))
+
+    def test_parcel_lookups_are_unverified_modern_proxies(self):
+        with (ROOT / "data" / "parcels_research.csv").open(encoding="utf-8", newline="") as file:
+            rows = list(csv.DictReader(file))
+        self.assertEqual({"GUL-010", "GUL-011", "GUL-014", "GUL-015"}, {row["toponym_id"] for row in rows})
+        self.assertTrue(all(row["coordinate_status"] == "private_geocoder_unverified" for row in rows))
+
+    def test_dossier_claims_stay_unconfirmed(self):
+        with (ROOT / "data" / "claims.csv").open(encoding="utf-8", newline="") as file:
+            rows = {row["claim_id"]: row for row in csv.DictReader(file)}
+        self.assertEqual("hypothesis", rows["CL-009"]["evidence_status"])
+        self.assertEqual("hypothesis", rows["CL-010"]["evidence_status"])
+        for claim_id in ("CL-013", "CL-015", "CL-018", "CL-020", "CL-021"):
+            self.assertEqual("pending", rows[claim_id]["evidence_status"])
+        self.assertEqual("disputed", rows["CL-022"]["evidence_status"])
+
 
 if __name__ == "__main__":
     unittest.main()

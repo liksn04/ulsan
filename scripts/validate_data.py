@@ -13,6 +13,12 @@ ROOT = Path(__file__).resolve().parents[1]
 FEATURE_TYPES = {"village", "valley", "field", "unmatched_citation"}
 EVIDENCE = {"source_verified", "secondary_quote", "hypothesis", "pending", "disputed", "rejected"}
 LOCATION = {"none", "relative", "parcel_clue"}
+ACCESS = {
+    "pdf_pages_checked", "online_checked", "abstract_checked",
+    "citation_identified", "not_obtained", "needs_official_recheck",
+}
+# Coordinates in parcels_research.csv are modern lookups; none is verified yet.
+PARCEL_COORD_STATUS = {"private_geocoder_unverified", "official_lookup_pending_review"}
 CHECKS = {
     "toponyms.csv": {
         "id_col": "toponym_id",
@@ -32,6 +38,14 @@ CHECKS = {
     "claims.csv": {
         "id_col": "claim_id",
         "fields": ["claim_id", "claim", "source_ids", "evidence_status", "spatial_status", "next_check"],
+        "expected": None,
+    },
+    "parcels_research.csv": {
+        "id_col": "toponym_id",
+        "fields": [
+            "toponym_id", "canonical_name", "historic_parcel", "road_name_address", "latitude", "longitude",
+            "coordinate_system", "source_id", "coordinate_status", "claim_id", "historical_scope_warning",
+        ],
         "expected": None,
     },
 }
@@ -78,6 +92,9 @@ def validate(data_dir: Path = ROOT / "data") -> list[str]:
                     errors.append(f"{filename}:{idx}: missing {col}")
 
     sources = {row.get("source_id") for row in loaded["sources.csv"]}
+    for i, row in enumerate(loaded["sources.csv"], 2):
+        if row.get("access_status") not in ACCESS:
+            errors.append(f"sources.csv:{i}: invalid access_status {row.get('access_status')}")
     names = loaded["toponyms.csv"]
     counts = Counter(row.get("feature_type") for row in names)
     if counts != Counter({"village": 4, "valley": 21, "field": 8, "unmatched_citation": 4}):
@@ -117,6 +134,37 @@ def validate(data_dir: Path = ROOT / "data") -> list[str]:
             if source_id not in sources:
                 errors.append(f"claims.csv:{i}: unknown source ID {source_id}")
 
+    claims = {row.get("claim_id") for row in loaded["claims.csv"]}
+    toponyms = {row.get("toponym_id"): row for row in names}
+    for i, row in enumerate(loaded["parcels_research.csv"], 2):
+        ref = toponyms.get(row.get("toponym_id"))
+        if ref is None:
+            errors.append(f"parcels_research.csv:{i}: unknown toponym_id {row.get('toponym_id')}")
+            continue
+        if row.get("canonical_name") != ref.get("name"):
+            errors.append(f"parcels_research.csv:{i}: canonical_name differs from toponyms.csv")
+        if row.get("historic_parcel") != ref.get("parcel_clue"):
+            errors.append(f"parcels_research.csv:{i}: historic_parcel differs from toponyms.csv parcel_clue")
+        village = row.get("historic_village", "")
+        if village and village != ref.get("quoted_1911_village"):
+            errors.append(f"parcels_research.csv:{i}: historic_village not attested in toponyms.csv")
+        if row.get("coordinate_status") not in PARCEL_COORD_STATUS:
+            errors.append(f"parcels_research.csv:{i}: coordinate_status changed without method review")
+        if row.get("coordinate_system") != "WGS84":
+            errors.append(f"parcels_research.csv:{i}: unexpected coordinate_system")
+        try:
+            lat, lon = float(row["latitude"]), float(row["longitude"])
+            if not (33 <= lat <= 39 and 124 <= lon <= 132):
+                errors.append(f"parcels_research.csv:{i}: coordinates outside expected Korea bounds")
+        except (ValueError, KeyError, TypeError):
+            errors.append(f"parcels_research.csv:{i}: invalid coordinates")
+        for source_id in row.get("source_id", "").split("|"):
+            if source_id not in sources:
+                errors.append(f"parcels_research.csv:{i}: unknown source ID {source_id}")
+        for claim_id in row.get("claim_id", "").split("|"):
+            if claim_id not in claims:
+                errors.append(f"parcels_research.csv:{i}: unknown claim ID {claim_id}")
+
     return errors
 
 def main() -> int:
@@ -128,7 +176,7 @@ def main() -> int:
         for error in errors:
             print("ERROR:", error, file=sys.stderr)
         return 1
-    print("OK: 37 toponyms, 4 modern control points, linked sources and claims")
+    print("OK: 37 toponyms, 4 modern control points, parcel lookups, linked sources and claims")
     return 0
 
 if __name__ == "__main__":

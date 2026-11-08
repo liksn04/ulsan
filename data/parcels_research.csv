@@ -1,5 +1,5 @@
-toponym_id,canonical_name,historic_village,historic_parcel,road_name_address,latitude,longitude,coordinate_system,source,notes
-GUL-015,안골,栢川洞/굴화리,굴화리 631,울산광역시 울주군 범서읍 백천길 103 일원,35.544563,129.238049,WGS84,Kakao Map / Google Maps,문수산 북사면 안쪽 골짜기 최심부; 2018 문헌 지번
-GUL-010,물탕골,槐亭洞,굴화리 589-5,울산광역시 울주군 범서읍 백천2길 22-65,35.553522,129.243211,WGS84,Kakao Map / 행정안전부 도로명주소,옛 목욕곡(沐浴谷); 백천 서쪽 물탕 약수터 지번과 공식 건물 매핑 일치
-GUL-011,배나무골,屈火洞,굴화리 578,울산광역시 울주군 범서읍 백천길 82-2 일원,35.553223,129.238644,WGS84,Kakao Map / Google Maps,옛 이목곡(梨木谷); 진댓골 서쪽 구릉 경사지 지번
-GUL-014,상아골,槐亭洞,굴화리 165,울산광역시 울주군 범서읍 장검길 142 일원,35.546543,129.247731,WGS84,Kakao Map / Google Maps,옛 상아곡(象牙谷); 장검 동남쪽 상어 지형 골짜기 지번
+"toponym_id","canonical_name","historic_village","historic_parcel","road_name_address","latitude","longitude","coordinate_system","source_id","coordinate_status","claim_id","historical_scope_warning","source_note","notes"
+"GUL-015","안골","","굴화리 631","울산광역시 울주군 범서읍 백천길 103 일원","35.544563","129.238049","WGS84","SRC-026|SRC-001","private_geocoder_unverified","CL-021","옛 지번 위치·골짜기 중심이 아닌 현대 주소 조회점","Kakao Map / Google Maps","2018 문헌 지번 단서. PR #7 원안의 귀속 '栢川洞/굴화리'와 '문수산 북사면 최심부' 서술은 근거 미기재로 삭제(docs/03 정정 기록)"
+"GUL-010","물탕골","槐亭洞","굴화리 589-5","울산광역시 울주군 범서읍 백천2길 22-65","35.553522","129.243211","WGS84","SRC-026|SRC-001","private_geocoder_unverified","CL-021|CL-008","옛 지번 위치·골짜기 중심이 아닌 현대 주소 조회점","Kakao Map / 행정안전부 도로명주소","옛 목욕곡(沐浴谷). 589-5와 백천2길 22-65의 대응은 CL-008 검증 대기. 같은 주소의 CP-004 좌표와 약 55m 차이. PR #7 원안의 '공식 건물 매핑 일치' 서술은 검증 기록이 없어 삭제"
+"GUL-011","배나무골","屈火洞","굴화리 578","울산광역시 울주군 범서읍 백천길 82-2 일원","35.553223","129.238644","WGS84","SRC-026|SRC-001","private_geocoder_unverified","CL-021","옛 지번 위치·골짜기 중심이 아닌 현대 주소 조회점","Kakao Map / Google Maps","옛 이목곡(梨木谷). 2018 문헌 상대 위치는 진댓골 서쪽. 578과 현대 주소의 대응은 지번 연혁 미확인"
+"GUL-014","상아골","槐亭洞","굴화리 165","울산광역시 울주군 범서읍 장검길 142 일원","35.546543","129.247731","WGS84","SRC-026|SRC-001","private_geocoder_unverified","CL-021","옛 지번 위치·골짜기 중심이 아닌 현대 주소 조회점","Kakao Map / Google Maps","옛 상아곡(象牙谷). 2018 문헌 상대 위치는 장검 동남쪽. 165와 현대 주소의 대응은 지번 연혁 미확인"
